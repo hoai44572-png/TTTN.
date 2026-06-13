@@ -4,9 +4,11 @@ import AdminText from './components/admin-text';
 import AdminImage from './components/admin-image';
 import AdminSection from './components/admin-section';
 import AdminHero from './components/admin-hero';
+import AdminBannerSenHong from './components/admin-banner-senhong';
+import AdminDepartments from './components/admin-departments';
+import AdminAboutUs from './components/admin-about-us';
 
-//Config — đăng ký 5 components với fields + defaultProps + render.
-
+// Config — đăng ký các components với fields + defaultProps + render.
 export const puckConfig = {
   components: {
     Heading: {
@@ -121,6 +123,7 @@ export const puckConfig = {
       render: (props) => <AdminSection {...props} />
     },
 
+    // ĐÃ SỬA: Đóng gói gọn gàng Component Hero
     Hero: {
       label: 'Hero Banner',
       fields: {
@@ -189,6 +192,130 @@ export const puckConfig = {
         layout: { align: 'center' }
       },
       render: (props) => <AdminHero {...props} />
+    },
+
+    // 1. ĐĂNG KÝ CỤM SEN HỒNG
+    BannerSenHong: {
+      label: 'Cụm Sen Hồng',
+      fields: {
+        backgroundType: {
+          type: "radio",
+          options: [
+            { label: "Màu nền", value: "color" },
+            { label: "Hình ảnh/GIF", value: "image" }
+          ],
+        },
+        backgroundValue: { type: "text", label: "Mã màu / URL Ảnh" },
+        alignment: {
+          type: "select", label: "Căn lề khối",
+          options: [
+            { label: "Trái", value: "flex-start" },
+            { label: "Giữa", value: "center" },
+            { label: "Phải", value: "flex-end" }
+          ]
+        },
+        boxRadius: { type: "text", label: "Bo góc khối (px)" },
+        title: { type: "text", label: "Tiêu đề chính" },
+        titleColor: { type: "text", label: "Màu tiêu đề" },
+        titleSize: { type: "text", label: "Cỡ chữ tiêu đề" },
+        description: { type: "textarea", label: "Mô tả" },
+        descColor: { type: "text", label: "Màu mô tả" },
+        buttonText: { type: "text", label: "Chữ trên nút" },
+        buttonBgColor: { type: "text", label: "Màu nền nút" },
+        buttonTextColor: { type: "text", label: "Màu chữ nút" },
+        buttonRadius: { type: "text", label: "Bo góc nút" },
+      },
+      defaultProps: {
+        backgroundType: "color",
+        backgroundValue: "#a8c0ff",
+        alignment: "flex-start",
+        boxRadius: "24px",
+        title: "Sen Hồng",
+        titleColor: "#facc15",
+        titleSize: "48px",
+        description: "CLB Doanh nhân Đồng Tháp tại TP.HCM quy tụ những người con quê hương...",
+        descColor: "#ffffff",
+        buttonText: "Tham gia cộng đồng",
+        buttonBgColor: "#3b82f6",
+        buttonTextColor: "#ffffff",
+        buttonRadius: "999px"
+      },
+      render: (props) => <AdminBannerSenHong {...props} />,
+    },
+
+    // 2. ĐĂNG KÝ CÁC BAN CHUYÊN MÔN
+    Departments: {
+      label: 'Các Ban Chuyên Môn',
+      fields: {
+        backgroundType: {
+          type: "radio", label: "Loại nền",
+          options: [{ label: "Màu", value: "color" }, { label: "Ảnh", value: "image" }]
+        },
+        backgroundValue: { type: "text", label: "Giá trị nền" },
+        mainTitle: { type: "text", label: "Tiêu đề chính" },
+        titleColor: { type: "text", label: "Màu tiêu đề" },
+        subTitle: { type: "text", label: "Tiêu đề phụ" },
+        items: {
+          type: "array", label: "Danh sách Ban",
+          getItemSummary: (item) => item.title || "Ban chuyên môn",
+          arrayFields: {
+            title: { type: "text", label: "Tên ban" },
+            icon: { type: "text", label: "Link Icon" }, 
+            btnText: { type: "text", label: "Chữ nút" },
+            btnRadius: { type: "text", label: "Bo góc nút" }
+          }
+        }
+      },
+      defaultProps: {
+        backgroundType: "color",
+        backgroundValue: "#eef2ff",
+        mainTitle: "CÁC BAN CHUYÊN MÔN",
+        titleColor: "#1e3a8a",
+        subTitle: "CLB DOANH NHÂN ĐỒNG THÁP TẠI TP. HỒ CHÍ MINH",
+        items: [
+          { title: "Ban Kinh tế - Đầu tư", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
+          { title: "Ban Văn hóa - Thể thao", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
+          { title: "Ban Xã hội - Cộng đồng", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" }
+        ]
+      },
+      render: (props) => <AdminDepartments {...props} />,
+    },
+
+    // 3. ĐĂNG KÝ VỀ CÂU LẠC BỘ & CƠ CẤU
+    AboutUs: {
+      label: 'Về CLB & Tổ Chức',
+      fields: {
+        backgroundType: {
+          type: "radio", label: "Loại nền",
+          options: [{ label: "Màu", value: "color" }, { label: "Ảnh", value: "image" }]
+        },
+        backgroundValue: { type: "text", label: "Giá trị nền" },
+        columns: {
+          type: "array", label: "Các Cột Thông Tin",
+          getItemSummary: (item) => item.title || "Cột thông tin",
+          arrayFields: {
+            type: {
+              type: "select", label: "Loại nội dung",
+              options: [
+                { label: "Đoạn văn bản", value: "text" },
+                { label: "Danh sách nhân sự", value: "team" }
+              ]
+            },
+            title: { type: "text", label: "Tiêu đề cột" },
+            content: { type: "textarea", label: "Nội dung (Text)" }, 
+            image: { type: "text", label: "Ảnh góc dưới (Text)" }, 
+          }
+        }
+      },
+      defaultProps: {
+        backgroundType: "color",
+        backgroundValue: "#fdf4ff",
+        columns: [
+          { type: "text", title: "VỀ CÂU LẠC BỘ", content: "Nội dung giới thiệu ở đây..." },
+          { type: "team", title: "CƠ CẤU TỔ CHỨC", content: "" }
+        ]
+      },
+      render: (props) => <AdminAboutUs {...props} />,
     }
   },
 
@@ -196,7 +323,8 @@ export const puckConfig = {
   categoryGroups: [
     { title: 'Cơ bản', components: ['Heading', 'Text', 'Image'] },
     { title: 'Layout', components: ['Section'] },
-    { title: 'Nâng cao', components: ['Hero'] }
+    // ĐÃ SỬA: Thêm 3 khối mới vào nhóm Nâng cao để hiển thị trên Sidebar
+    { title: 'Nâng cao', components: ['Hero', 'BannerSenHong', 'Departments', 'AboutUs'] }
   ],
 
   // Root config
