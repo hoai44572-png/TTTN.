@@ -23,7 +23,11 @@ const AdminAboutUs = ({
         { id: 1, name: 'Trần Văn Khang', role1: 'Ủy viên BCH', role2: 'Tổng Giám Đốc', company: 'Công ty CP Logistics Đồng Tháp', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' },
         { id: 2, name: 'Đỗ Thu Trang', role1: 'Thủ quỹ CLB', role2: 'Giám đốc Tài chính', company: 'Công ty TNHH Sơn Việt', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80' },
         { id: 3, name: 'Vũ Hoàng Long', role1: 'Ủy viên BCH', role2: 'Giám đốc Điều hành', company: 'Công ty Công nghệ số Mekong', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80' },
-        { id: 4, name: 'Nguyễn Minh Triết', role1: 'Phó Chủ Tịch', role2: 'Chủ tịch HĐQT', company: 'Tập đoàn Đầu tư và Phát triển Sa Giang', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80' }
+        { id: 4, name: 'Nguyễn Minh Triết', role1: 'Phó Chủ Tịch', role2: 'Chủ tịch HĐQT', company: 'Tập đoàn Đầu tư và Phát triển Sa Giang', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80' },
+        { id: 5, name: 'Nguyễn Phạm Thanh', role1: 'Phó Chủ Tịch', role2: 'Chủ tịch HĐQT', company: 'Tập đoàn Đầu tư và Phát triển Sa Giang', avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80' },
+        
+        { id: 6, name: 'Nguyễn Minh Ngọc', role1: 'Phó Chủ Tịch', role2: 'Chủ tịch HĐQT', company: 'Tập đoàn Đầu tư và Phát triển Sa Giang', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80'} 
+  
       ]
     }
   ]
