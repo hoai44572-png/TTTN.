@@ -8,7 +8,6 @@ import AdminBannerSenHong from './components/admin-banner-senhong';
 import AdminDepartments from './components/admin-departments';
 import AdminAboutUs from './components/admin-about-us';
 
-// Config — đăng ký các components với fields + defaultProps + render.
 export const puckConfig = {
   components: {
     Heading: {
@@ -112,7 +111,7 @@ export const puckConfig = {
         },
         padding_x: { type: 'number', label: 'Padding ngang', min: 0, max: 16, default: 4 },
         padding_y: { type: 'number', label: 'Padding dọc', min: 0, max: 16, default: 4 },
-        content: { type: 'slot' } // Cho phép nested components
+        content: { type: 'slot' }
       },
       defaultProps: {
         container: 'lg',
@@ -123,7 +122,6 @@ export const puckConfig = {
       render: (props) => <AdminSection {...props} />
     },
 
-    // ĐÃ SỬA: Đóng gói gọn gàng Component Hero
     Hero: {
       label: 'Hero Banner',
       fields: {
@@ -143,7 +141,7 @@ export const puckConfig = {
               ]
             }
           },
-          getItemSummary: (item) => item.text
+          getItemSummary: (item) => item.text || 'Nút bấm'
         },
         background: {
           type: 'object', label: 'Background',
@@ -157,10 +155,10 @@ export const puckConfig = {
               ]
             },
             color: { type: 'text', label: 'Màu nền', default: '#ffffff' },
-            gradientFrom: { type: 'text', label: 'Gradient từ', default: '#667eea' },
-            gradientTo: { type: 'text', label: 'Gradient đến', default: '#764ba2' },
-            gradientDirection: { type: 'text', label: 'Hướng', default: 'to bottom right' },
-            imageUrl: { type: 'text', label: 'URL ảnh nền' }
+            fromColor: { type: 'text', label: 'Gradient từ', default: '#667eea' },
+            toColor: { type: 'text', label: 'Gradient đến', default: '#764ba2' },
+            direction: { type: 'text', label: 'Hướng', default: 'to bottom right' },
+            bg_image: { type: 'text', label: 'URL ảnh nền' }
           }
         },
         layout: {
@@ -186,20 +184,19 @@ export const puckConfig = {
         ],
         background: {
           type: 'gradient',
-          gradientFrom: '#667eea', gradientTo: '#764ba2',
-          gradientDirection: 'to bottom right'
+          fromColor: '#667eea', toColor: '#764ba2',
+          direction: 'to bottom right'
         },
         layout: { align: 'center' }
       },
       render: (props) => <AdminHero {...props} />
     },
 
-    // 1. ĐĂNG KÝ CỤM SEN HỒNG
     BannerSenHong: {
       label: 'Cụm Sen Hồng',
       fields: {
         backgroundType: {
-          type: "radio",
+          type: "radio", label: "Loại nền",
           options: [
             { label: "Màu nền", value: "color" },
             { label: "Hình ảnh/GIF", value: "image" }
@@ -243,7 +240,6 @@ export const puckConfig = {
       render: (props) => <AdminBannerSenHong {...props} />,
     },
 
-    // 2. ĐĂNG KÝ CÁC BAN CHUYÊN MÔN
     Departments: {
       label: 'Các Ban Chuyên Môn',
       fields: {
@@ -275,13 +271,14 @@ export const puckConfig = {
         items: [
           { title: "Ban Kinh tế - Đầu tư", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
           { title: "Ban Văn hóa - Thể thao", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
-          { title: "Ban Xã hội - Cộng đồng", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" }
+          { title: "Ban Xã hội - Cộng đồng", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
+          { title: "Ban Khởi nghiệp", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" },
+          { title: "Ban Giao thương quốc tế", icon: "https://via.placeholder.com/50", btnText: "Xem hoạt động", btnRadius: "20px" }
         ]
       },
       render: (props) => <AdminDepartments {...props} />,
     },
 
-    // 3. ĐĂNG KÝ VỀ CÂU LẠC BỘ & CƠ CẤU
     AboutUs: {
       label: 'Về CLB & Tổ Chức',
       fields: {
@@ -303,7 +300,19 @@ export const puckConfig = {
             },
             title: { type: "text", label: "Tiêu đề cột" },
             content: { type: "textarea", label: "Nội dung (Text)" }, 
-            image: { type: "text", label: "Ảnh góc dưới (Text)" }, 
+            image: { type: "text", label: "Ảnh góc dưới (Text)" },
+            // THÊM VÀO ĐÂY: Cho phép admin thêm, bớt thành viên mảng lồng nhau
+            members: {
+              type: "array", label: "Danh sách thành viên (Dành cho kiểu Team)",
+              getItemSummary: (m) => m.name || "Thành viên",
+              arrayFields: {
+                name: { type: "text", label: "Họ và tên" },
+                role1: { type: "text", label: "Chức vụ CLB" },
+                role2: { type: "text", label: "Chức vụ DN" },
+                company: { type: "text", label: "Doanh nghiệp" },
+                avatar: { type: "text", label: "Link Ảnh đại diện" }
+              }
+            }
           }
         }
       },
@@ -311,23 +320,34 @@ export const puckConfig = {
         backgroundType: "color",
         backgroundValue: "#fdf4ff",
         columns: [
-          { type: "text", title: "VỀ CÂU LẠC BỘ", content: "Nội dung giới thiệu ở đây..." },
-          { type: "team", title: "CƠ CẤU TỔ CHỨC", content: "" }
+          { 
+            type: "text", 
+            title: "VỀ CÂU LẠC BỘ", 
+            content: "CLB Doanh nhân Đồng Tháp tại TP.HCM là nơi hội tụ của doanh nghiệp, nhà quản lý và cá nhân khởi nghiệp...",
+            image: "https://via.placeholder.com/300x200"
+          },
+          { 
+            type: "team", 
+            title: "CƠ CẤU TỔ CHỨC", 
+            content: "",
+            members: [
+              { name: 'Trần Văn Khang', role1: 'Ủy viên BCH', role2: 'Tổng Giám đốc', company: 'Công ty CP Logistics Đồng Tháp', avatar: 'https://via.placeholder.com/80' },
+              { name: 'Đỗ Thu Trang', role1: 'Thủ quỹ CLB', role2: 'Giám đốc Tài chính', company: 'Công ty TNHH Sơn Việt', avatar: 'https://via.placeholder.com/80' },
+              { name: 'Vũ Hoàng Long', role1: 'Ủy viên BCH', role2: 'Giám đốc Điều hành', company: 'Công ty Công nghệ số Mekong', avatar: 'https://via.placeholder.com/80' }
+            ]
+          }
         ]
       },
       render: (props) => <AdminAboutUs {...props} />,
     }
   },
 
-  // Sidebar categories
   categoryGroups: [
     { title: 'Cơ bản', components: ['Heading', 'Text', 'Image'] },
     { title: 'Layout', components: ['Section'] },
-    // ĐÃ SỬA: Thêm 3 khối mới vào nhóm Nâng cao để hiển thị trên Sidebar
     { title: 'Nâng cao', components: ['Hero', 'BannerSenHong', 'Departments', 'AboutUs'] }
   ],
 
-  // Root config
   root: {
     render: ({ children }) => (
       <div className="min-h-screen">{children}</div>
